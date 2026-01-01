@@ -1,4 +1,4 @@
-module Database::V1
+module DatabaseCore::V1
 
   class QueryRunner
 

@@ -1,4 +1,4 @@
-module Database::V3
+module DatabaseCore::V3
 
   class UpdateModel
 

@@ -1,4 +1,4 @@
-module Database::V2
+module DatabaseCore::V2
 
   class Wherer
 

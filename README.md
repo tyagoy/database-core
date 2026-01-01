@@ -47,12 +47,12 @@ require 'database/core'
 
 ```ruby
 # Exemplo ilustrativo, ajuste para refletir suas APIs reais
-Database::Core.configure do |config|
+DatabaseCore::Core.configure do |config|
   config.logger = Rails.logger
   config.default_connection_url = ENV['DATABASE_URL']
 end
 
-connection = Database::Core.connection
+connection = DatabaseCore::Core.connection
 result = connection.execute('SELECT 1')
 ```
 

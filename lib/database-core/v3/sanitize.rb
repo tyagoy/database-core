@@ -1,4 +1,4 @@
-module Database::V3
+module DatabaseCore::V3
 
   RULE = /[^a-zA-Z0-9_]/.freeze
 

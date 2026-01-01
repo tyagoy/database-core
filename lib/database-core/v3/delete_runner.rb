@@ -1,14 +1,14 @@
-module Database::V3
+module DatabaseCore::V3
 
-  class UpdateRunner
+  class DeleteRunner
 
-    def self.update input
+    def self.delete input
 
       input.each do |model, payload|
 
         Array.wrap(payload).each do |item|
 
-          sql = UpdateModel.build(model, item)
+          sql = DeleteModel.build(model, item)
 
           ActiveRecord::Base.connection.execute(sql)
         end
