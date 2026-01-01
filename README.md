@@ -1,43 +1,116 @@
-# Database
+# database-core
 
-TODO: Delete this and the text below, and describe your gem
+Biblioteca Ruby para centralizar o acesso a banco de dados e regras comuns de persistência, para ser reutilizada entre diferentes serviços e aplicações da organização.
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/database`. To experiment with that code, run `bin/console` for an interactive prompt.
+Ela não é uma aplicação standalone, mas sim um "core" que expõe classes, módulos e configurações para ser usada como dependência em outros projetos Ruby/Rails.
 
-## Installation
+## Instalação
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+### Via Git (recomendado durante o desenvolvimento)
 
-Install the gem and add to the application's Gemfile by executing:
+No `Gemfile` da sua aplicação, adicione:
 
-```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+```ruby
+gem 'database-core', git: 'https://github.com/[USERNAME]/database-core.git'
 ```
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+Depois rode:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle install
 ```
 
-## Usage
+### Via gem (quando publicada no RubyGems)
 
-TODO: Write usage instructions here
+Quando a gem estiver publicada, você poderá instalá-la com:
 
-## Development
+```bash
+gem install database-core
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Ou adicionar ao `Gemfile`:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+gem 'database-core'
+```
 
-## Contributing
+## Uso
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/database. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/database/blob/master/CODE_OF_CONDUCT.md).
+1. Adicione a gem ao seu projeto (ver seção de Instalação).
+2. Requeira a biblioteca principal no ponto de entrada da sua aplicação, caso necessário:
 
-## License
+```ruby
+require 'database/core'
+```
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+3. Utilize os módulos e classes expostos pela gem, por exemplo:
 
-## Code of Conduct
+```ruby
+# Exemplo ilustrativo, ajuste para refletir suas APIs reais
+Database::Core.configure do |config|
+  config.logger = Rails.logger
+  config.default_connection_url = ENV['DATABASE_URL']
+end
 
-Everyone interacting in the Database project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/database/blob/master/CODE_OF_CONDUCT.md).
+connection = Database::Core.connection
+result = connection.execute('SELECT 1')
+```
+
+Consulte a pasta `lib/` para ver os componentes disponíveis (conexões, repositórios, adapters, etc.) e adapte o exemplo acima à API real do projeto.
+
+## Desenvolvimento
+
+Após clonar o repositório, instale as dependências:
+
+```bash
+bin/setup
+```
+
+Para abrir um console interativo com o ambiente da gem carregado:
+
+```bash
+bin/console
+```
+
+Para rodar a suíte de testes (ajuste o comando conforme o test runner configurado, por exemplo RSpec ou Minitest):
+
+```bash
+bundle exec rake test
+# ou
+bundle exec rspec
+```
+
+Para instalar a gem localmente (para usar em outro projeto do mesmo ambiente):
+
+```bash
+bundle exec rake install
+```
+
+Para criar uma nova versão:
+
+1. Atualize o número da versão em `lib/database/core/version.rb`.
+2. Rode:
+
+```bash
+bundle exec rake release
+```
+
+Isso criará uma tag git, fará o push dos commits e publicará a gem (se configurado).
+
+## Contribuindo
+
+Relatos de bugs e pull requests são bem-vindos no GitHub em:
+
+https://github.com/[USERNAME]/database-core
+
+Ao contribuir, siga as boas práticas de código Ruby, adicione testes cobrindo as mudanças e atualize a documentação quando necessário.
+
+## Licença
+
+Este projeto está disponível como código aberto sob os termos da [Licença MIT](https://opensource.org/licenses/MIT).
+
+## Código de Conduta
+
+Todos que interagem com o repositório `database-core`, issue trackers, salas de bate-papo e listas de e-mail devem seguir o código de conduta definido em:
+
+https://github.com/[USERNAME]/database-core/blob/master/CODE_OF_CONDUCT.md
