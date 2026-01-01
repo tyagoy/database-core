@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-require_relative "lib/database/version"
+require_relative "lib/database-core/version"
 
 Gem::Specification.new do |spec|
   spec.name = "database-core"
-  spec.version = Database::VERSION
+  spec.version = DatabaseCore::VERSION
   spec.authors = ["Tiago da Silva"]
   spec.email = ["tyagoy@gmail.com"]
 
   spec.summary = "A simple Ruby library for database abstraction and management."
   spec.description = "A comprehensive Ruby library providing database abstraction and management features, making it easier to interact with various databases."
-  spec.homepage = "https://rubygems.org/gems/database"
+  spec.homepage = "https://github.com/tyagoy/database-core"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
 
@@ -34,7 +34,7 @@ Gem::Specification.new do |spec|
 
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
-  spec.add_dependency "activerecord", ">= 7.0"
+  spec.add_dependency "activerecord", "~> 7.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html
