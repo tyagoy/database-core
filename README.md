@@ -11,7 +11,7 @@ Ela não é uma aplicação standalone, mas sim um "core" que expõe classes, m�
 No `Gemfile` da sua aplicação, adicione:
 
 ```ruby
-gem 'database-core', git: 'https://github.com/[USERNAME]/database-core.git'
+gem 'database-core', git: 'https://github.com/tyagoy/database-core.git'
 ```
 
 Depois rode:
@@ -47,13 +47,20 @@ require 'database/core'
 
 ```ruby
 # Exemplo ilustrativo, ajuste para refletir suas APIs reais
-DatabaseCore::Core.configure do |config|
-  config.logger = Rails.logger
-  config.default_connection_url = ENV['DATABASE_URL']
+
+ActiveRecord::Base.transaction do
+  DatabaseCore::V3::InsertRunner.insert(request.POST)
 end
 
-connection = DatabaseCore::Core.connection
-result = connection.execute('SELECT 1')
+ActiveRecord::Base.transaction do
+  DatabaseCore::V3::DeleteRunner.delete(request.POST)
+end
+
+ActiveRecord::Base.transaction do
+  DatabaseCore::V3::UpdateRunner.update(request.POST)
+end
+
+response = DatabaseCore::V3::QueryRunner.query(request.POST)
 ```
 
 Consulte a pasta `lib/` para ver os componentes disponíveis (conexões, repositórios, adapters, etc.) e adapte o exemplo acima à API real do projeto.
@@ -88,7 +95,7 @@ bundle exec rake install
 
 Para criar uma nova versão:
 
-1. Atualize o número da versão em `lib/database/core/version.rb`.
+1. Atualize o número da versão em `lib/database-core/version.rb`.
 2. Rode:
 
 ```bash
@@ -101,7 +108,7 @@ Isso criará uma tag git, fará o push dos commits e publicará a gem (se config
 
 Relatos de bugs e pull requests são bem-vindos no GitHub em:
 
-https://github.com/[USERNAME]/database-core
+https://github.com/tyagoy/database-core
 
 Ao contribuir, siga as boas práticas de código Ruby, adicione testes cobrindo as mudanças e atualize a documentação quando necessário.
 
@@ -113,4 +120,4 @@ Este projeto está disponível como código aberto sob os termos da [Licença MI
 
 Todos que interagem com o repositório `database-core`, issue trackers, salas de bate-papo e listas de e-mail devem seguir o código de conduta definido em:
 
-https://github.com/[USERNAME]/database-core/blob/master/CODE_OF_CONDUCT.md
+https://github.com/tyagoy/database-core/blob/master/CODE_OF_CONDUCT.md
